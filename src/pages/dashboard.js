@@ -1,47 +1,62 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/authProvider";
-import Navbar from "../components/navbar";
+import SideBar from "../components/header/sidebar";
+import OverView from "./overview";
+import Header from "../components/header/header";
+// import Section1 from "../components/home/section1";
+// import Navbar from "../components/navbar";
+// import { useEvent } from "../context/eventContext";
 
 export default function Dashboard() {
-    const [member, SetMember] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const auth = useAuth();
+    const [size, setSize] = useState(false);
+    // const {events}=useEvent();
+
     useEffect(() => {
-        const fetchPreferences = async () => {
-            try {
-                const token = auth.token 
+        if (auth.userData)
+            setLoading(false)
+        // console.log(auth.userData)
+    }, [auth.userData]);
 
-                const response = await fetch('https://localhost:7152/api/Member/getme', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` 
-                    }
-                });
+    useEffect(() => {
+        document.body.style.backgroundColor = '#1A1A40'; // Change to your desired color
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+        // Clean up the effect
+        return () => {
+            document.body.style.backgroundColor = ''; // Reset to original color
+        };
+    }, []);
 
-                const data = await response.json();
-                console.log(data)
-                SetMember(data);
-            } catch (error) {
-                console.error('Error fetching preferences:', error);
-            } finally {
-                setLoading(false);
+    useEffect(() => {
+
+        const handleResize = () => {
+            if (window.innerWidth <= 640) {
+                setSize(true)
+            }
+            else {
+                setSize(false)
             }
         };
 
-        fetchPreferences();
-    }, [auth.token]);
+        handleResize();
 
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+    
 
     return (
-        <div className="">
-            <Navbar></Navbar>
-            <div className="h-screen text-3xl text-white flex justify-center items-center">
-                Hello
+        <div className="sm:h-screen sm:flex sm:justify-between ">
+            <SideBar isOpen={isOpen} size={size} setIsOpen={setIsOpen}/>
+            <div className="xl:w-[83%] sm:w-[81%] flex flex-col sm:h-full sm:pr-10 sm:pt-10 px-2 pt-5">
+                <Header isOpen={isOpen} setIsOpen={setIsOpen} size={size}/>
+                <OverView></OverView>
             </div>
         </div>
 

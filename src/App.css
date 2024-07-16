@@ -12,6 +12,8 @@ html{
     background-color: #8758ff;
 }
 
+/* signup signin */
+
 .signup input::placeholder{
     color: #ffffff4d;
 }
@@ -30,4 +32,12 @@ html{
     display: none;
   }
 
-  
+
+.sidebar{
+  border-right: 1px solid #2c2b34;
+  transition: transform 0.6s ease-in-out;
+}
+
+.sidebar-title{
+  font-family: "Playwrite CU", cursive;
+}
