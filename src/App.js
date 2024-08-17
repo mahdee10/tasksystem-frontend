@@ -13,21 +13,21 @@ function App() {
   return (
     <div className="App">
       <Router>
-      <EventProvider>
-        <TaskProvider>
-        <AuthProvider>
-          <Routes>
-          <Route exact path="/" element={<Navigate to="/login" />} />
-            <Route  exact path="/login" element={<Login />} />
-            <Route  exact path="/signup" element={<SignUp />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Route>
-          </Routes>
-        </AuthProvider>
-        </TaskProvider>
+        <EventProvider>
+          <TaskProvider>
+            <AuthProvider>
+              <Routes>
+                <Route exact path="/" element={<Navigate to="/login" />} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/signup" element={<SignUp />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/dashboard/*" element={<Dashboard />} />
+                </Route>
+              </Routes>
+            </AuthProvider>
+          </TaskProvider>
         </EventProvider>
-        
+
       </Router>
     </div>
   );

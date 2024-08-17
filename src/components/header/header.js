@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/authProvider";
 import SettingsIcon from '@mui/icons-material/Settings';
 import MenuIcon from '@mui/icons-material/Menu';
+import ProfilePopup from "../profile/profilePopup";
+import { useLocation } from "react-router-dom";
 export default function Header({ isOpen, setIsOpen, size }) {
     const [imageSrc, setImageSrc] = useState('');
+    const [openProfilePopup, setOpenProfilePopup] = useState(false);
     const auth = useAuth();
 
     function toggleSideBar() {
@@ -13,7 +16,12 @@ export default function Header({ isOpen, setIsOpen, size }) {
             setIsOpen(true)
 
     }
+    const location = useLocation();
+    const [pathname, setPathname] = useState(location.pathname.split("/")[2]);
 
+    useEffect(()=>{
+        setPathname(location.pathname.split("/")[2])
+    },[location])
     useEffect(() => {
         const fetchImage = async () => {
             try {
@@ -42,8 +50,8 @@ export default function Header({ isOpen, setIsOpen, size }) {
     }, [auth.token]);
     return (
         <div className="flex justify-between items-center h-fit">
-            <h1 className="sm:block hidden text-white text-3xl font-semibold">OverView</h1>
-            {size&&<MenuIcon onClick={()=>toggleSideBar()} className="sm:hidden block text-white cursor-pointer" ></MenuIcon>}
+            {pathname&&<h1 className="md:block hidden text-white text-3xl font-semibold">{pathname[0].toUpperCase()+pathname.slice(1)}</h1>}
+            {size && <MenuIcon onClick={() => toggleSideBar()} className="md:hidden block text-white cursor-pointer" ></MenuIcon>}
 
             <div className="flex items-center">
                 <div className="flex justify-center items-center w-10 h-10 border-2 border-[#FFFFFFB2] rounded-xl text-[#FFFFFFB2]  cursor-pointer hover:text-white">
@@ -52,10 +60,16 @@ export default function Header({ isOpen, setIsOpen, size }) {
                 </div>
 
                 {imageSrc &&
-                    <img className="ml-2 w-10 h-10 rounded-xl" src={imageSrc} alt="Profile" />
+                    <img onClick={()=>setOpenProfilePopup(true)} className="ml-2 w-10 h-10 rounded-xl cursor-pointer" src={imageSrc} alt="Profile" />
 
                 }
             </div>
+            <ProfilePopup
+                imageSrc={imageSrc}
+                setImageSrc={setImageSrc}
+                openProfilePopup={openProfilePopup}
+                setOpenProfilePopup={setOpenProfilePopup}
+            ></ProfilePopup>
         </div>
     )
 }

@@ -41,3 +41,62 @@ html{
 .sidebar-title{
   font-family: "Playwrite CU", cursive;
 }
+
+
+/* table */
+/* Webkit-based browsers (Chrome, Safari) */
+.table-container::-webkit-scrollbar {
+  height: 3px; /* Set height for the horizontal scrollbar */
+}
+
+.table-container::-webkit-scrollbar-track:horizontal {
+  background: black;
+  /* border-radius: 10px; */
+}
+
+.table-container::-webkit-scrollbar-thumb:horizontal {
+  background: white;
+  border-radius: 10px;
+}
+
+
+.table-container::-webkit-scrollbar-thumb:horizontal:hover {
+  background: #555;
+}
+
+.table-container table{
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.description-column {
+  width: 0; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.priority-select:focus{
+  outline:  none;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+
+.tr-hover td{
+  /* border: 1px solid red !important; */
+  z-index: 10;
+  border: 2px groove #2c2b34 !important;
+  transition: border 0.2s ease-in-out;
+}
+
+
+th{
+  border: 2px groove #2c2b34 !important;
+  transition: border 0.2s ease-in-out;
+}
+tr{
+  transition: border 0.2s ease-in-out;
+}

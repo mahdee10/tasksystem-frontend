@@ -34,7 +34,7 @@ export default function UpComingEvents() {
     }
     return (
 
-            <div className="rounded-2xl sm:h-full md:w-[30%] w-fit flex flex-col sm:p-2 p-5 bg-[#8758ff] sm:mt-0 mt-5">
+            <div className="rounded-2xl  lg:h-full  h-auto md:w-[30%] w-fit flex flex-col sm:p-2 p-5 bg-[#8758ff] sm:mt-0 mt-5">
                 <h2 className="text-[#1A1A40] text-center xl:text-xl lg:text-base font-bold mb-4">Upcoming Events</h2>
                 { upcomingEvents?
                     upcomingEvents.map((event) => (

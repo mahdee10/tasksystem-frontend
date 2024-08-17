@@ -3,6 +3,10 @@ import { useAuth } from "../auth/authProvider";
 import SideBar from "../components/header/sidebar";
 import OverView from "./overview";
 import Header from "../components/header/header";
+import { Route, Routes, Navigate } from "react-router-dom";
+import Tasks from "./tasks";
+import Events from "./events";
+
 // import Section1 from "../components/home/section1";
 // import Navbar from "../components/navbar";
 // import { useEvent } from "../context/eventContext";
@@ -32,7 +36,7 @@ export default function Dashboard() {
     useEffect(() => {
 
         const handleResize = () => {
-            if (window.innerWidth <= 640) {
+            if (window.innerWidth <= 768) {
                 setSize(true)
             }
             else {
@@ -49,14 +53,21 @@ export default function Dashboard() {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-    
+
 
     return (
-        <div className="sm:h-screen sm:flex sm:justify-between ">
-            <SideBar isOpen={isOpen} size={size} setIsOpen={setIsOpen}/>
-            <div className="xl:w-[83%] sm:w-[81%] flex flex-col sm:h-full sm:pr-10 sm:pt-10 px-2 pt-5">
-                <Header isOpen={isOpen} setIsOpen={setIsOpen} size={size}/>
-                <OverView></OverView>
+        <div className="h-screen md:flex md:justify-between ">
+            <SideBar isOpen={isOpen} size={size} setIsOpen={setIsOpen} />
+            <div className="xl:w-[83%] md:w-[81%] flex flex-col sm:h-full sm:pr-10 sm:pt-10 px-2 pt-5">
+                <Header isOpen={isOpen} setIsOpen={setIsOpen} size={size} />
+                <Routes>
+                    <Route path="/" element={<Navigate to="overview" />} />
+                    <Route path="overview" element={<OverView />} />
+                    <Route path="tasks" element={<Tasks />} />
+                    <Route path="events" element={<Events />} />
+                </Routes>
+
+
             </div>
         </div>
 
