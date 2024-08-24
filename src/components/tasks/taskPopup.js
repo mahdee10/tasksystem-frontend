@@ -5,18 +5,22 @@ import PasswordIcon from '@mui/icons-material/Password';
 import CloseIcon from '@mui/icons-material/Close';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import DescriptionIcon from '@mui/icons-material/Description';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import TitleIcon from '@mui/icons-material/Title';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Select } from '@mui/material';
 import { useRef, useState } from 'react';
 import { useTask } from '../../context/taskContext';
 import { useAuth } from '../../auth/authProvider';
+import TaskAddInput from './taskAddInput';
 
 export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
 
     const dateInputRef = useRef(null);
-    const {token}= useAuth();
-    const {setTasks}=useTask()
+    const { token } = useAuth();
+    const { setTasks } = useTask()
 
     // Function to add a new task
     const addTask = async (newTask) => {
@@ -56,11 +60,11 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
             description: Yup.string()
                 .required('Description is required'),
             dueDate: Yup.date()
-            .required('Date and time are required')
-            .min(new Date(), 'Date and time must be in the future'),
+                .required('Date and time are required')
+                .min(new Date(), 'Date and time must be in the future'),
             priorityLevel: Yup.string().required('Priority is required'),
             remindBeforeHours: Yup.number()
-            .typeError('remindBeforeHours must be a number')
+                .typeError('remindBeforeHours must be a number')
                 .required('remindBeforeHours is required')
                 .moreThan(0, 'remindBeforeHours must be greater than 0'),
         }),
@@ -74,20 +78,21 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
         }
     };
 
- 
+
     return (
         <Dialog open={openTaskPopup} onClose={() => setOpenTaskPopup(false)} className="relative z-50 ">
-        
+
             <div className="fixed inset-0 flex w-screen items-center justify-center sm:p-4 backdrop-blur-md 
             ">
                 <DialogPanel className="relative max-w-lg space-y-4 border  bg-[#1A1A40] p-12 rounded sm:border-solid border-white border-none">
-            <CloseIcon onClick={() => setOpenTaskPopup(false)}  className="cursor-pointer absolute text-white right-5 top-5"></CloseIcon>
-                    
+                    <CloseIcon onClick={() => setOpenTaskPopup(false)} className="cursor-pointer absolute text-white right-5 top-5"></CloseIcon>
+
                     <DialogTitle className="font-bold text-[#c69320] sm:text-3xl text-xl text-center ">Add Task</DialogTitle>
                     <form className="sm:h-full  signup flex   justify-between flex-wrap w-full" onSubmit={formik.handleSubmit}>
-                        <div className="sm:w-[48%] w-full flex flex-col h-fit items-start content-start">
-                            <div className="signup-input h-fit border-2 p-1 sm:border-[#8758ff] border-[#1A1A40] w-full mt-6 flex items-center sm:rounded-none rounded-md">
-                                <PersonIcon className=" text-white "></PersonIcon>
+                        {/* <div className=" sm:w-[48%] w-full flex flex-col h-fit items-start content-start ">
+                            <h4 className="text-sm font-bold text-[#ffffff4d] ">Title</h4>
+                            <div className="signup-input h-fit relative border-2 p-1 sm:border-[#8758ff] border-[#1A1A40] w-full  flex items-center sm:rounded-none rounded-md">
+                                <TitleIcon className=" text-white "></TitleIcon>
                                 <input
 
                                     type="text"
@@ -103,13 +108,52 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
                             {formik.touched.title && formik.errors.title ? (
                                 <div className="text-red-500 text-xs ">{formik.errors.title}</div>
                             ) : null}
-                        </div>
+                        </div> */}
+                        <TaskAddInput
+                            error={formik.touched.title && formik.errors.title ? (
+                                <div className="text-red-500 text-xs ">{formik.errors.title}</div>
+                            ) : null}
+                            icon={<TitleIcon className=" text-white "></TitleIcon>}
+                            title={"Title"}
+
+                        >
+                            <input
+
+                                type="text"
+                                placeholder="Title"
+                                className="w-full  pl-2  bg-transparent text-white "
+                                name="title"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.title}
+                            />
+                        </TaskAddInput>
+
+                        <TaskAddInput
+                            error={formik.touched.description && formik.errors.description ? (
+                                <div className="text-red-500 text-xs">{formik.errors.description}</div>
+                            ) : null}
+                            icon={<DescriptionIcon className=" text-white "></DescriptionIcon>}
+                            title={"Description"}
+
+                        >
+                            <input
+                                type="text"
+                                placeholder="Description"
+                                className="w-full  h-fit pl-2  bg-transparent text-white"
+                                name="description"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.description}
+                            />
+                        </TaskAddInput>
 
 
 
-                        <div className=" sm:w-[48%] w-full flex flex-col h-fit items-start content-start">
-                            <div className="signup-input h-fit relative border-2 p-1 sm:border-[#8758ff] border-[#1A1A40] w-full sm:mt-6 mt-2 flex items-center sm:rounded-none rounded-md">
-                                <PersonIcon className=" text-white "></PersonIcon>
+                        {/* <div className=" sm:w-[48%] w-full flex flex-col h-fit items-start content-start ">
+                            <h4 className="text-sm font-bold text-[#ffffff4d] ">Description</h4>
+                            <div className="signup-input h-fit relative border-2 p-1 sm:border-[#8758ff] border-[#1A1A40] w-full  flex items-center sm:rounded-none rounded-md">
+                                <DescriptionIcon className=" text-white "></DescriptionIcon>
                                 <input
                                     type="text"
                                     placeholder="Description"
@@ -124,16 +168,16 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
                             {formik.touched.description && formik.errors.description ? (
                                 <div className="text-red-500 text-xs">{formik.errors.description}</div>
                             ) : null}
-                            {/* {
-                                serverError && serverError[0].code === "DuplicateUserName" ? <div className="text-red-500 text-xs">{serverError[0].description}</div> : null
-                            } */}
-                        </div>
+                            
+                        </div> */}
 
-                        <div className=" sm:w-[48%] w-full flex flex-col">
-                            <div onClick={()=>{handleContainerClick()}} className="signup-input relative  border-2 p-1 sm:border-[#8758ff] border-[#1A1A40] w-full mt-2 flex items-center sm:rounded-none rounded-md">
-                                <EmailIcon className=" text-white "></EmailIcon>
+                        <div className=" sm:w-[48%] w-full flex flex-col h-fit items-start content-start">
+                            <h4 className="text-sm font-bold text-[#ffffff4d] ">Due Date</h4>
+
+                            <div onClick={() => { handleContainerClick() }} className="signup-input h-fit relative border-2 p-1 border-[#8758ff]  w-full  flex items-center sm:rounded-none rounded-md">
+                                <DateRangeIcon className=" text-white "></DateRangeIcon>
                                 <input
-                                ref={dateInputRef}
+                                    ref={dateInputRef}
                                     type="datetime-local"
                                     placeholder="DueDate"
                                     className="w-full  pl-2  bg-transparent text-white"
@@ -144,10 +188,10 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
                                     }}
                                     onBlur={formik.handleBlur}
                                     value={formik.values.dueDate}
-                                    // onChange={(e)=>{handleDateChange(e)}}
+                                // onChange={(e)=>{handleDateChange(e)}}
                                 />
-                                
-                                
+
+
 
                             </div>
                             {formik.touched.dueDate && formik.errors.dueDate ? (
@@ -155,7 +199,26 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
                             ) : null}
                         </div>
 
-                        <div className=" sm:w-[48%] w-full flex flex-col">
+                        <TaskAddInput
+                            error={formik.touched.remindBeforeHours && formik.errors.remindBeforeHours ? (
+                                <div className="text-red-500 text-xs">{formik.errors.remindBeforeHours}</div>
+                            ) : null}
+                            icon={<NotificationsActiveIcon className=" text-white "></NotificationsActiveIcon>}
+                            title={"Reminder"}
+
+                        >
+                            <input
+                                type="text"
+                                placeholder="Remind Before Hours"
+                                className="w-full  pl-2  bg-transparent text-white"
+                                name="remindBeforeHours"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.remindBeforeHours}
+                            />
+                        </TaskAddInput>
+
+                        {/* <div className=" sm:w-[48%] w-full flex flex-col">
                             <div className="signup-input relative  border-2 p-1 sm:border-[#8758ff] border-[#1A1A40]  w-full mt-2 flex items-center sm:rounded-none rounded-md">
                                 <NotificationsActiveIcon className=" text-white "></NotificationsActiveIcon>
                                 <input
@@ -172,8 +235,30 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
                             {formik.touched.remindBeforeHours && formik.errors.remindBeforeHours ? (
                                 <div className="text-red-500 text-xs">{formik.errors.remindBeforeHours}</div>
                             ) : null}
-                        </div>
-                        <div className=" sm:w-[48%] w-full flex flex-col">
+                        </div> */}
+
+                        <TaskAddInput
+                            error={formik.touched.priorityLevel && formik.errors.priorityLevel ? (
+                                <div className="text-red-500 text-xs">{formik.errors.priorityLevel}</div>
+                            ) : null}
+                            icon={<PriorityHighIcon className=" text-white "></PriorityHighIcon>}
+                            title={"Priority"}
+
+                        >
+                            <select
+                                placeholder="Priority"
+                                className="w-full p-0 select priority-select  bg-[#1A1A40] border-none focus:border-none text-white"
+                                name="priorityLevel"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.priorityLevel}
+                                aria-label="Project status">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </TaskAddInput>
+                        {/* <div className=" sm:w-[48%] w-full flex flex-col">
                             <div className="signup-input relative  border-2 p-1 sm:border-[#8758ff] border-[#1A1A40]  w-full mt-2 flex items-center sm:rounded-none rounded-md">
                                 <PriorityHighIcon className=" text-white "></PriorityHighIcon>
                                 <select
@@ -193,7 +278,7 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
                             {formik.touched.priorityLevel && formik.errors.priorityLevel ? (
                                 <div className="text-red-500 text-xs">{formik.errors.priorityLevel}</div>
                             ) : null}
-                        </div>
+                        </div> */}
 
 
 

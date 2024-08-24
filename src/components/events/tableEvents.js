@@ -1,21 +1,19 @@
-
-// import CloseIcon from '@mui/icons-material/Close';
-// import DoneIcon from '@mui/icons-material/Done';
 import { useEffect, useState } from "react";
-// import TaskEditPopup from "./taskEditPopup";
+
 import { useEvent } from "../../context/eventContext";
+import EventEditPopup from "./eventEditPopup";
 
 export default function TableEvents() {
     const { events } = useEvent();
     const [currentPage, setCurrentPage] = useState(1);
     const [currentEvents, setCurrentEvents] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
-    // const [openTaskEditPopup, setOpenTaskEditPopup] = useState(false);
+    const [openEventEditPopup, setOpenEventEditPopup] = useState(false);
     const [trHover, setTrHover] = useState({
         taskId: -1,
         hover: false
     });
-    const [event, setEvent] = useState(null);
+    const [eventt, setEvent] = useState(null);
     const eventsPerPage = 5;
 
     function formatDate(dateStr) {
@@ -67,14 +65,13 @@ export default function TableEvents() {
         setCurrentPage(pageNumber);
     };
 
-    const handleEventClick = (event) => {
-        setEvent(event)
-        // setOpenTaskEditPopup(true);
+    const handleEventClick = (eventt) => {
+        setEvent(eventt)
+        setOpenEventEditPopup(true);
     }
 
     return (
-        <>      {
-            // !openTaskEditPopup ?
+        <>      {!openEventEditPopup?
                 <div>
                     <div className="overflow-x-auto w-full table-container ">
                         <table className="bg-[#8758ff] w-full min-w-max min-h-max">
@@ -131,9 +128,9 @@ export default function TableEvents() {
                             className={`px-2 py-1 w-24 bg-green-600 rounded-xl text-white ml-2 text-sm ${currentPage === totalPages ? "bg-slate-400" : ""}`}>Next</button>
                     </div>
                 </div>
-                // :
-                // <TaskEditPopup task={task} openTaskEditPopup={openTaskEditPopup} setOpenTaskEditPopup={setOpenTaskEditPopup} />
-        }
+       :
+            <EventEditPopup eventt={eventt} openEventEditPopup={openEventEditPopup} setOpenEventEditPopup={setOpenEventEditPopup} />
+            }
         </>
     )
 }
