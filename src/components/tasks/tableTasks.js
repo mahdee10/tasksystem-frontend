@@ -4,8 +4,9 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useEffect, useState } from "react";
 import TaskEditPopup from "./taskEditPopup";
 
-export default function TableTasks() {
+export default function TableTasks({filterTasks}) {
     const { tasks } = useTask();
+    const [filtered, setFiltered]=useState(tasks)
     const [currentPage, setCurrentPage] = useState(1);
     const [currentTasks, setCurrentTasks] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
@@ -16,6 +17,8 @@ export default function TableTasks() {
     });
     const [task, setTask] = useState(null);
     const tasksPerPage = 5;
+
+    
 
     function formatDate(dateStr) {
         const date = new Date(dateStr);
@@ -47,18 +50,38 @@ export default function TableTasks() {
     }
 
     useEffect(() => {
-        if (tasks) {
+        if (filtered) {
             // Calculate the indices for slicing the tasks array
             const indexOfLastTask = currentPage * tasksPerPage;
             const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-            const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
+            const currentTasks = filtered.slice(indexOfFirstTask, indexOfLastTask);
             setCurrentTasks(currentTasks)
             // Calculate total pages
-            const totalPages = Math.ceil(tasks.length / tasksPerPage);
+            const totalPages = Math.ceil(filtered.length / tasksPerPage);
             setTotalPages(totalPages)
         }
-        console.log(tasks, "table")
-    }, [tasks, currentPage])
+        
+        console.log(filtered)
+    }, [filtered, currentPage,tasks])
+
+    useEffect(()=>{
+        if(filterTasks==="all"){
+            setFiltered(tasks);
+        }
+        else if (filterTasks==="done"){
+            setFiltered(tasks.filter(task=>task.isDone===true));
+        }
+        else if (filterTasks==="pending"){
+            setFiltered(tasks.filter(task=>task.isDone===false));
+        }
+    },[filterTasks,tasks])
+
+    // useEffect(()=>{
+    //     if(tasks){
+    //         setFiltered(tasks);
+    //     }
+        
+    // },[tasks])
 
     // Handle page change
     const handlePageChange = (pageNumber) => {
