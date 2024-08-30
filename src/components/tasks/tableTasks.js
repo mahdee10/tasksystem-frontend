@@ -4,7 +4,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useEffect, useState } from "react";
 import TaskEditPopup from "./taskEditPopup";
 
-export default function TableTasks({filterTasks}) {
+export default function TableTasks({filterTasks,searchedTasks, setTitle}) {
     const { tasks } = useTask();
     const [filtered, setFiltered]=useState(tasks)
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +18,16 @@ export default function TableTasks({filterTasks}) {
     const [task, setTask] = useState(null);
     const tasksPerPage = 5;
 
-    
+    useEffect(()=>{
+        if(searchedTasks){
+            setFiltered(searchedTasks)
+        }
+        else{
+            setFiltered(tasks)
+        }
+    },[searchedTasks])
+
+
 
     function formatDate(dateStr) {
         const date = new Date(dateStr);
@@ -66,13 +75,14 @@ export default function TableTasks({filterTasks}) {
 
     useEffect(()=>{
         if(filterTasks==="all"){
-            setFiltered(tasks);
+            setFiltered(searchedTasks?searchedTasks:tasks);
         }
         else if (filterTasks==="done"){
-            setFiltered(tasks.filter(task=>task.isDone===true));
+            console.log()
+            setFiltered(searchedTasks?(searchedTasks.filter(task=>task.isDone===true)):tasks.filter(task=>task.isDone===true));
         }
         else if (filterTasks==="pending"){
-            setFiltered(tasks.filter(task=>task.isDone===false));
+            setFiltered(searchedTasks?searchedTasks.filter(task=>task.isDone===false):tasks.filter(task=>task.isDone===false));
         }
     },[filterTasks,tasks])
 
@@ -162,7 +172,7 @@ export default function TableTasks({filterTasks}) {
                     </div>
                 </div>
                 :
-                <TaskEditPopup task={task} openTaskEditPopup={openTaskEditPopup} setOpenTaskEditPopup={setOpenTaskEditPopup} />
+                <TaskEditPopup setTitle={setTitle} task={task} openTaskEditPopup={openTaskEditPopup} setOpenTaskEditPopup={setOpenTaskEditPopup} />
         }
         </>
     )

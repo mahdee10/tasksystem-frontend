@@ -10,7 +10,7 @@ import { useTask } from '../../context/taskContext';
 import { useAuth } from '../../auth/authProvider';
 import TaskDeletePopup from './taskDeletePopup';
 
-export default function TaskEditPopup({ openTaskEditPopup, setOpenTaskEditPopup, task }) {
+export default function TaskEditPopup({ openTaskEditPopup, setOpenTaskEditPopup, task, setTitle }) {
 
     const dateInputRef = useRef(null);
     const { token } = useAuth();
@@ -43,6 +43,7 @@ export default function TaskEditPopup({ openTaskEditPopup, setOpenTaskEditPopup,
                 prevTasks.map((tasky) => (tasky.taskId === task.taskId ? data : tasky))
             );
 
+            setTitle("")
             setOpenTaskEditPopup(false);
         } catch (error) {
             console.error("Error editing task:", error);
