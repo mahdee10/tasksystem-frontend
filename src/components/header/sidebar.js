@@ -17,7 +17,8 @@ export default function SideBar({ isOpen, size, setIsOpen }) {
     const [pathname, setPathname] = useState(location.pathname);
     useEffect(() => {
         setPathname(location.pathname);
-        console.log(location.pathname)
+        console.log(location.pathname);
+        console.log(auth.token)
     }, [location.pathname]);
 
 
