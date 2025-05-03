@@ -166,7 +166,7 @@ export default function SignUpForm() {
                 <input
 
                     ref={dateInputRef}
-                    type="date"
+                    type="text"
                     placeholder="Date of Birth"
                     className="w-full pl-2 border-white bg-transparent text-white"
                     name="dob"
