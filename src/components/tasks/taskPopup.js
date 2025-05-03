@@ -25,7 +25,7 @@ export default function TaskPopup({ openTaskPopup, setOpenTaskPopup }) {
     // Function to add a new task
     const addTask = async (newTask) => {
         try {
-            const response = await fetch("https://localhost:7152/api/Task", {
+            const response = await fetch("https://tasksystem-backend.onrender.com/api/Task", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

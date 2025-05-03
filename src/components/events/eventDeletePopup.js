@@ -7,7 +7,7 @@ export default function EventDeletePopup({ openEventDeletePopup, setOpenEventDel
 
     const handleDelete = async () => {
         try {
-            const response = await fetch(`https://localhost:7152/api/Event/${eventt.eventId}`, {
+            const response = await fetch(`https://tasksystem-backend.onrender.com/api/Event/${eventt.eventId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Include the token in the headers

@@ -20,7 +20,7 @@ export default function EventAddPopup({ openEventPopup, setOpenEventPopup }) {
     // Function to add a new event
     const addEvent = async (newEvent) => {
         try {
-            const response = await fetch("https://localhost:7152/api/Event", {
+            const response = await fetch("https://tasksystem-backend.onrender.com/api/Event", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

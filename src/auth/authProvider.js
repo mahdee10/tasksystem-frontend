@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     
     const signupAction = async (data) => {
         try {
-            const response = await fetch("https://localhost:7152/api/Account/register", {
+            const response = await fetch("https://tasksystem-backend.onrender.com/api/Account/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const AuthProvider = ({ children }) => {
     }
     const loginAction = async (data) => {
         try {
-            const response = await fetch("https://localhost:7152/api/Account/login", {
+            const response = await fetch("https://tasksystem-backend.onrender.com/api/Account/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const AuthProvider = ({ children }) => {
             try {
 
 
-                const response = await fetch('https://localhost:7152/api/Member/getme', {
+                const response = await fetch('https://tasksystem-backend.onrender.com/api/Member/getme', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

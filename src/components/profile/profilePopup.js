@@ -43,7 +43,7 @@ export default function ProfilePopup({ openProfilePopup, setOpenProfilePopup, im
         }
         try {
 
-            const response = await fetch('https://localhost:7152/api/Profile', {
+            const response = await fetch('https://tasksystem-backend.onrender.com/api/Profile', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Add token to headers

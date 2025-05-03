@@ -11,7 +11,7 @@ export default function TaskDeletePopup({ openTaskDeletePopup, setOpenTaskDelete
 
     const handleDelete = async () => {
         try {
-            const response = await fetch(`https://localhost:7152/api/Task/${task.taskId}`, {
+            const response = await fetch(`https://tasksystem-backend.onrender.com/api/Task/${task.taskId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Include the token in the headers

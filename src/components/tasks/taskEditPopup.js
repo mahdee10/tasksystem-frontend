@@ -22,7 +22,7 @@ export default function TaskEditPopup({ openTaskEditPopup, setOpenTaskEditPopup,
     const editTask = async (updatedTask) => {
         try {
             console.log(updatedTask)
-            const response = await fetch(`https://localhost:7152/api/Task/${task.taskId}`, {
+            const response = await fetch(`https://tasksystem-backend.onrender.com/api/Task/${task.taskId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

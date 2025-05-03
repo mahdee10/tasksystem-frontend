@@ -26,7 +26,7 @@ export default function Header({ isOpen, setIsOpen, size }) {
         const fetchImage = async () => {
             try {
                 const token = auth.token
-                const response = await fetch('https://localhost:7152/api/Profile', {
+                const response = await fetch('https://tasksystem-backend.onrender.com/api/Profile', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },

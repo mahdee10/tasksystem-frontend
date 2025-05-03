@@ -17,7 +17,7 @@ export default function TaskHeader({ setFilterTasks, filterTasks, setOpenTaskPop
     const fetchTasks = async (title) => {
 
         try {
-            const response = await fetch(`https://localhost:7152/api/Task/mytasks?Title=${title}`, {
+            const response = await fetch(`https://tasksystem-backend.onrender.com/api/Task/mytasks?Title=${title}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

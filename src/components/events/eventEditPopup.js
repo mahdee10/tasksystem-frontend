@@ -23,7 +23,7 @@ export default function EventEditPopup({ openEventEditPopup, setOpenEventEditPop
     const editEvent = async (updatedEvent) => {
         try {
             console.log(updatedEvent)
-            const response = await fetch(`https://localhost:7152/api/Event/${eventt.eventId}`, {
+            const response = await fetch(`https://tasksystem-backend.onrender.com/api/Event/${eventt.eventId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
