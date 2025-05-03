@@ -68,6 +68,7 @@ const AuthProvider = ({ children }) => {
             if (res) {
 
                 setUser(res.username);
+                console.log(res.token)
                 setToken(res.token);
                 
 
